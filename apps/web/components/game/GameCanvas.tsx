@@ -1,28 +1,52 @@
 "use client";
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function GameCanvas({ gameId }: { gameId: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [engineReady, setEngineReady] = useState(false);
 
   useEffect(() => {
-    if (!canvasRef.current) return;
+    const timer = setTimeout(() => {
+      setEngineReady(true);
+    }, 100);
 
-    // We will dynamically import the game logic here
-    // This keeps our main bundle small!
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (!engineReady || !canvasRef.current) return;
+
+    let kInstance: any = null;
+
     const initGame = async () => {
       const { startDodgeWin } = await import('@/games/dodge-win/game');
       
       if (gameId === 'dodge-win') {
-        startDodgeWin(canvasRef.current!);
+        kInstance = await startDodgeWin(canvasRef.current!);
       }
     };
 
     initGame();
-  }, [gameId]);
+
+    return () => {
+      if (kInstance && typeof kInstance.quit === 'function') {
+        kInstance.quit(); 
+      }
+    };
+
+  }, [engineReady, gameId]);
 
   return (
-    <div className="relative w-full aspect-video bg-black flex items-center justify-center">
-      <canvas ref={canvasRef} className="w-full h-full block" />
+    <div className="relative w-full aspect-video bg-[#1a1b26] rounded-lg overflow-hidden flex items-center justify-center">
+      {!engineReady && (
+        <div className="text-[#565f89] font-mono text-xs animate-pulse">
+          INITIALIZING...
+        </div>
+      )}
+      <canvas 
+        ref={canvasRef} 
+        className={`w-full h-full block transition-opacity duration-500 ${engineReady ? 'opacity-100' : 'opacity-0'}`} 
+      />
     </div>
   );
 }
