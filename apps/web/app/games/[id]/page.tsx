@@ -2,8 +2,9 @@ import Navbar from '@/components/Navbar';
 import GameCanvas from '@/components/game/GameCanvas';
 import { GAMES } from '@/lib/games';
 import { notFound } from 'next/navigation';
+import Leaderboard from '@/components/game/Leaderboard';
 
-export default async function GamePage({ params }: { params: Promise<{ id: string }> }) {
+export default async function GamePage({ params }:{ params: Promise<{ id: string }> }) {
   const { id } = await params;
 
   const game = GAMES.find((g) => g.id === id);
@@ -27,12 +28,13 @@ export default async function GamePage({ params }: { params: Promise<{ id: strin
             <GameCanvas gameId={game.id} />
           </div>
 
-          <div className="w-full xl:w-80 space-y-6">
-            <div className="bg-[#1f2335] p-6 rounded-xl border border-[#414868]">
-              <h3 className="text-[#bb9af7] text-xs font-bold uppercase mb-4 tracking-tighter">
-                {game.title}_TOP_SCORES
+          <div className="w-full xl:w-80">
+            <div className="bg-[#1f2335] p-6 rounded-xl border border-[#414868] h-full shadow-lg">
+              <h3 className="text-[#bb9af7] text-xs font-bold uppercase mb-6 tracking-widest border-b border-[#414868] pb-2">
+                TOP_PILOTS_REGISTRY
               </h3>
-              <p className="text-[#565f89] text-[10px] italic">Fetching neural data...</p>
+              
+              <Leaderboard gameId={id} />
             </div>
           </div>
         </div>

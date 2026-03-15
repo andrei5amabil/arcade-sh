@@ -15,7 +15,7 @@ export async function startDodgeWin(canvas: HTMLCanvasElement) {
   k.onLoad(() => {
     const player = k.add([
         k.sprite("tux"),
-        k.pos(400,540),
+        k.pos(400,450),
         k.scale(0.2),
         k.area(),
         "player",
