@@ -33,7 +33,7 @@ export default function Leaderboard({ gameId }: { gameId: string }) {
 
   return (
     <div className="space-y-4">
-      {scores.length === 0 ? (
+      { !Array.isArray(scores) || scores.length === 0 ? (
         <p className="text-[#565f89] text-[10px] italic">NO_DATA_FOUND</p>
       ) : (
         scores.map((s, i) => (

@@ -53,6 +53,15 @@ export async function POST(request: Request) {
       [game_id, player_id, score]
     );
 
+    await client.query(`
+      INSERT INTO leaderboards (player_id, game_id, all_time_best, total_cumulative_score, times_played)
+      VALUES ($1, $2, $3::integer, $3::bigint, 1)
+      ON CONFLICT (player_id, game_id) DO UPDATE SET
+        all_time_best = GREATEST(leaderboards.all_time_best, EXCLUDED.all_time_best),
+        total_cumulative_score = leaderboards.total_cumulative_score + EXCLUDED.total_cumulative_score,
+        times_played = leaderboards.times_played + 1
+    `, [player_id, game_id, score]);
+
     const xpResult = await client.query(
       'SELECT SUM(score) as total FROM scores WHERE player_id = $1',
       [player_id]

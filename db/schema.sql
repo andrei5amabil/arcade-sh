@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS users (
     avatar_url TEXT,
     level INTEGER DEFAULT 1,
     xp INTEGER DEFAULT 0,
+    rank_title VARCHAR(50) DEFAULT 'LS_SPAMMER',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -21,11 +22,12 @@ CREATE TABLE IF NOT EXISTS games (
 
 -- 3. Leaderboards Table (The Registry/Glue)
 CREATE TABLE IF NOT EXISTS leaderboards (
-    id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
-    game_id INTEGER REFERENCES games(id) ON DELETE CASCADE,
-    score INTEGER NOT NULL,
-    achieved_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    player_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    game_id VARCHAR(50),
+    all_time_best INTEGER DEFAULT 0,
+    total_cumulative_score BIGINT DEFAULT 0,
+    times_played INTEGER DEFAULT 0,
+    PRIMARY KEY (player_id, game_id)
 );
 
 CREATE TABLE IF NOT EXISTS scores (

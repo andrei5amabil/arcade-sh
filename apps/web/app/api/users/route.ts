@@ -17,6 +17,15 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { username, email, password } = body;
 
+    const trimmedUsername = username.trim();
+    const regex = /^[a-zA-Z0-9_]{3,20}$/;
+    if (!regex.test(trimmedUsername)) {
+    return NextResponse.json(
+      { error: "Username must be 3-20 characters and contain no spaces or special characters." },
+      { status: 400 }
+    );
+  }
+
     const salts = 10;
     const hashPass = await bcrypt.hash(password, salts);
 
@@ -25,7 +34,7 @@ export async function POST(request: Request) {
       VALUES ($1, $2, $3, 1, 0) 
       RETURNING *`;
     
-    const values = [username, email, hashPass];
+    const values = [trimmedUsername, email, hashPass];
     const result = await pool.query(query, values);
 
     return NextResponse.json(result.rows[0], { status: 201 });
