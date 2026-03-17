@@ -19,7 +19,7 @@ export default function Navbar() {
     } else {
       setUser(null);
     }
-  }, [pathname]); // Re-syncs user state when navigating
+  }, [pathname]); 
 
   const handleLogout = () => {
     localStorage.removeItem('arcade_user');
@@ -37,7 +37,6 @@ export default function Navbar() {
       <div className="flex items-center gap-6">
         {user ? (
           <div className="flex items-center gap-6">
-            {/* Link to the new Profile Page */}
             <Link 
               href="/profile" 
               className={`text-xs font-mono transition-colors ${
@@ -58,7 +57,7 @@ export default function Navbar() {
           </div>
         ) : (
           <Link 
-            href="/register" 
+            href="/auth" 
             className="border border-[#7aa2f7] text-[#7aa2f7] px-4 py-1 rounded text-xs font-bold hover:bg-[#7aa2f7] hover:text-[#1a1b26] transition-all uppercase"
           >
             CONNECT_PLAYER

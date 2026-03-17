@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 interface GameStat {
   game_id: string;
   all_time_best: number;
-  total_cumulative_score: string; // BIGINT comes as string from Postgres
+  total_cumulative_score: string; 
   times_played: number;
 }
 

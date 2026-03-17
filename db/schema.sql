@@ -8,7 +8,8 @@ CREATE TABLE IF NOT EXISTS users (
     level INTEGER DEFAULT 1,
     xp INTEGER DEFAULT 0,
     rank_title VARCHAR(50) DEFAULT 'LS_SPAMMER',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_admin BOOLEAN DEFAULT FALSE
 );
 
 -- 2. Games Table (The Modules)
