@@ -24,6 +24,10 @@ export default function GameCanvas({ gameId }: { gameId: string }) {
       if (gameId === 'dodge-win') {
         kInstance = await startDodgeWin(canvasRef.current!);
       }
+      else if (gameId === 'space-intruder') {
+        const { startSpaceIntruder } = await import('@/games/space-intruder/game');
+        kInstance = await startSpaceIntruder(canvasRef.current!);
+      }
     };
 
     initGame();

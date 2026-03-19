@@ -34,6 +34,12 @@ export default function Navbar() {
         ARCADE.SH
       </Link>
 
+      <Link href="/posts" className={`text-[10px] font-bold tracking-widest uppercase transition-colors ${ 
+        pathname === '/posts' ? 'text-[#9ece6a] underline underline-offset-4' : 'text-[#565f89] hover:text-[#c0caf5]' }`}
+      >
+        [ POSTS ]
+      </Link>
+
       <div className="flex items-center gap-6">
         {user ? (
           <div className="flex items-center gap-6">

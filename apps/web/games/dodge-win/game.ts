@@ -105,11 +105,11 @@ export async function startDodgeWin(canvas: HTMLCanvasElement) {
 
       if (type === "bouncy") {
         components.push(k.color(k.rgb(100, 255, 100)));
-        components.push({ bounces: 0 }); // Direct property injection
+        components.push({ bounces: 0 });
         components.push(k.move(k.DOWN, projectileSpeed));
       } else if (type === "sniper") {
         components.push(k.color(k.rgb(255, 100, 100)));
-        components.push({ state: "falling" }); // Direct property injection
+        components.push({ state: "falling" }); 
         components.push(k.move(k.DOWN, projectileSpeed));
       } else {
         components.push(k.move(k.DOWN, projectileSpeed));
@@ -135,7 +135,7 @@ export async function startDodgeWin(canvas: HTMLCanvasElement) {
           b.pos.y = floorY - 5;
           b.unuse("move"); 
           b.use(k.move(k.UP, projectileSpeed)); 
-          b.bounces += 1; // Direct access
+          b.bounces += 1; 
           
           k.wait(0.3, () => {
             if (b.exists()) {
@@ -149,12 +149,11 @@ export async function startDodgeWin(canvas: HTMLCanvasElement) {
 
     k.onUpdate("sniper", async (s) => {
       if (s.state === "falling" && s.pos.y >= k.height() / 2) {
-        s.state = "aiming"; // Direct access
+        s.state = "aiming"; 
         s.unuse("move");
         
         const targetPos = player.exists() ? player.pos.clone() : s.pos.add(0, 200);
         
-        // PC Performance Tip: use tween for smoother scaling
         k.tween(s.scale.x, 0.08, 0.2, (val) => s.scale = k.vec2(val));
 
         await k.wait(0.5);
