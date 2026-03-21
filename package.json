@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "date-fns": "^4.1.0",
     "kaboom": "^3000.1.17"
   }
 }
