@@ -9,7 +9,8 @@ CREATE TABLE IF NOT EXISTS users (
     xp INTEGER DEFAULT 0,
     rank_title VARCHAR(50) DEFAULT 'LS_SPAMMER',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    is_admin BOOLEAN DEFAULT FALSE
+    is_admin BOOLEAN DEFAULT FALSE,
+    tickets INTEGER DEFAULT 0
 );
 
 -- 2. Games Table (The Modules)
@@ -53,3 +54,25 @@ CREATE TABLE comments (
     content TEXT NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE prizes (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    description TEXT,
+    cost INTEGER NOT NULL,
+    category TEXT,                              
+    item_value TEXT NOT NULL                                   
+);
+
+CREATE TABLE user_prizes (
+    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    prize_id INTEGER REFERENCES prizes(id) ON DELETE CASCADE,
+    unlocked_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (user_id, prize_id)
+);
+
+--INSERT INTO prizes (name, description, cost, category, item_value) VALUES 
+--('Golden Pilot', 'An exclusive gold-tinted avatar.', 500, 'avatar', 'gold_bean.png'),
+--('Neon Pulse', 'Your name will pulse with a purple glow.', 1500, 'theme', 'shadow-purple'),
+--('Dreadnought Badge', 'A massive shield icon next to your name.', 1000, 'badge', 'badge_shield.png')
+--ON CONFLICT DO NOTHING;
