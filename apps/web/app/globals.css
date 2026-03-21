@@ -24,3 +24,29 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@keyframes neon-pulse {
+  0%, 100% {
+    text-shadow: 0 0 5px #bb9af7, 0 0 10px #bb9af7;
+    color: #c0caf5;
+  }
+  50% {
+    text-shadow: 0 0 15px #bb9af7, 0 0 30px #bb9af7, 0 0 40px #bb9af7;
+    color: #ffffff;
+  }
+}
+
+.neon-pulse-text {
+  animation: neon-pulse 2s infinite ease-in-out;
+  font-weight: 900 !important;
+}
+
+@keyframes gold-shimmer {
+  0% { filter: brightness(1) drop-shadow(0 0 2px gold); }
+  50% { filter: brightness(1.4) drop-shadow(0 0 8px gold); }
+  100% { filter: brightness(1) drop-shadow(0 0 2px gold); }
+}
+
+.golden-pilot-avatar {
+  animation: gold-shimmer 3s infinite ease-in-out !important; 
+}

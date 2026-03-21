@@ -70,11 +70,14 @@ export async function POST(request: Request) {
     const newLevel = Math.floor(newTotalXp/100) + 1;
     const newTitle = getRankTitle(newLevel);
 
+    const ticketRatio = 10;
+    const ticketsEarned = Math.floor(score / ticketRatio);
+
     await client.query(`
       UPDATE users 
-      SET xp = $1, level = $2, rank_title = $3 
+      SET xp = $1, level = $2, rank_title = $3, tickets = tickets + $5 
       WHERE id = $4
-    `, [newTotalXp, newLevel, newTitle, player_id]);
+    `, [newTotalXp, newLevel, newTitle, player_id, ticketsEarned]);
 
     await client.query('COMMIT');
 

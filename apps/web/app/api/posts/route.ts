@@ -12,7 +12,10 @@ export async function GET() {
         posts.created_at, 
         users.username, 
         users.avatar_url,
-        users.rank_title
+        users.rank_title,
+        EXISTS (SELECT 1 FROM user_prizes WHERE user_id = users.id AND prize_id = 1) as has_golden_pilot,
+        EXISTS (SELECT 1 FROM user_prizes WHERE user_id = users.id AND prize_id = 2) as has_neon_pulse,
+        EXISTS (SELECT 1 FROM user_prizes WHERE user_id = users.id AND prize_id = 3) as has_dreadnought_badge
       FROM posts 
       JOIN users ON posts.user_id = users.id 
       ORDER BY posts.created_at DESC;

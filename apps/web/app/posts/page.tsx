@@ -12,6 +12,9 @@ interface Post {
   rank_title: string;
   created_at: string;
   user_id: number; 
+  has_golden_pilot: boolean;
+  has_neon_pulse: boolean;
+  has_dreadnought_badge: boolean;
 }
 
 
@@ -143,12 +146,24 @@ export default function PostsPage() {
                     <div className="flex items-center gap-4 mb-4">
                     <img 
                         src={`/sprites/${post.avatar_url || 'tux.png'}`} 
-                        className="w-10 h-10 rounded border border-[#414868] bg-[#16161e]" 
-                        alt="pilot" 
+                        className={`w-10 h-10 rounded border transition-all ${
+                            post.has_golden_pilot 
+                            ? 'border-[#e0af68] shadow-[0_0_10px_#e0af68] brightness-125' 
+                            : 'border-[#414868]'
+                        }`} 
+                        alt="pilot"
                     />
                     <div className="flex flex-col">
                         <div className="flex items-center gap-2">
-                        <span className="text-[#9ece6a] text-sm font-bold uppercase">{post.username}</span>
+                        <span className={`text-sm font-bold uppercase transition-all ${post.has_neon_pulse ? 'neon-pulse-text' : 'text-[#9ece6a]' }`}>{post.username}</span>
+                        {post.has_dreadnought_badge && (
+                            <span 
+                                title="Dreadnought Badge"
+                                className="text-[#7aa2f7] text-[10px] cursor-help bg-[#7aa2f7]/10 px-1 rounded border border-[#7aa2f7]/30"
+                                >
+                                🛡️
+                            </span>
+                        )}
                         <span className="text-[#bb9af7] text-[10px] bg-[#bb9af7]/10 px-2 py-0.5 rounded border border-[#bb9af7]/20 uppercase">
                             {post.rank_title}
                         </span>

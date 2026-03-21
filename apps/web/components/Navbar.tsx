@@ -40,6 +40,17 @@ export default function Navbar() {
         [ POSTS ]
       </Link>
 
+      <Link 
+        href="/shop" 
+        className={`text-[10px] font-bold tracking-[0.2em] uppercase transition-all ${
+          pathname === '/shop' 
+            ? 'text-[#9ece6a] border-b border-[#9ece6a]' 
+            : 'text-[#565f89] hover:text-[#c0caf5]'
+        }`}
+      >
+        [PRIZE_SHOP]
+      </Link>
+
       <div className="flex items-center gap-6">
         {user ? (
           <div className="flex items-center gap-6">

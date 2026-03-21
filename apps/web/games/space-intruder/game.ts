@@ -17,6 +17,7 @@ export const startSpaceIntruder = async (canvas: HTMLCanvasElement) => {
   let score = 0;
   let wave = 1;
   let direction = 1;
+  let isSaving = false;
   const SPEED = 350;
   const ENEMY_SPEED = 100;
 
@@ -132,12 +133,16 @@ export const startSpaceIntruder = async (canvas: HTMLCanvasElement) => {
     });
 
     async function saveAndQuit() {
+
+      if (isSaving) return;
+      isSaving = true;
+
       k.debug.paused = true;
       if (user.id) {
         await fetch("/api/scores", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ 
+          body: JSON.stringify({  
             player_id: user.id, 
             game_id: "space-intruder", 
             score: score 

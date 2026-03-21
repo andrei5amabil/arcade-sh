@@ -9,7 +9,7 @@ export async function GET(request: Request) {
 
   try {
     const result = await pool.query(
-      'SELECT id, username, avatar_url, level, rank_title, is_admin FROM users WHERE id = $1',
+      'SELECT id, username, avatar_url, level, rank_title, is_admin, tickets FROM users WHERE id = $1',
       [id]
     );
 
